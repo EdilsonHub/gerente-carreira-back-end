@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProjetoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Response(["erro" => "vazio"], 204)->json();
 });
 
 Route::get('/frifairei', function () {
     return ["nome" => "Ana Maria jogadora de frifairi"];
 });
+
+
+
+
+Route::resource('/', ProjetoController::class);
