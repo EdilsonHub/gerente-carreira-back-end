@@ -16,8 +16,12 @@ class Projeto extends Model
         "data_criacao",
         "data_inicio_execucao",
         "data_conclusao",
-        "estado_projeto",
         "custo_previsto",
         "local_de_realizacao_previsto"
     ];
+
+    // public function projetosFilhos()
+    // {
+    //     $this->belongsTo(Pro);
+    // }
 }

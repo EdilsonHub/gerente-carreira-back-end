@@ -19,7 +19,12 @@ class ProjetoController extends Controller
      */
     public function index()
     {
-        return Response("welcome não pode redirecionar para o indice",201);
+        $listaDeProjetos = Projeto::where('id_projeto_pai', null)->get();
+        if($listaDeProjetos->count() == 0) {
+            // return Response("[]", 204);
+            return Response()->json($listaDeProjetos, 204);
+        }
+        return Response()->json($listaDeProjetos, 200);
     }
 
     /**
@@ -52,7 +57,8 @@ class ProjetoController extends Controller
      */
     public function show($id)
     {
-        return Response("testes",201);
+        $return = Projeto::find($id);
+        return Response($return, empty($return)? 404 :200);
     }
 
     /**

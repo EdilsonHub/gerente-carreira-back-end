@@ -21,7 +21,6 @@ class CreateTableProjetos extends Migration
             $table->integer('id_projeto_pai')->nullable();
             $table->integer('nivel_projeto')->default(0);
             $table->dateTime('data_criacao' )->default(date('Y-m-d h:i:s'));
-            $table->integer('estado_projeto');
             $table->bigInteger('custo_previsto')->default(0);
             $table->integer('local_de_realizacao_previsto')->nullable();
         });

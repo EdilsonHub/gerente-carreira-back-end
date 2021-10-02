@@ -11,7 +11,8 @@ use Tests\TestCase;
 class ProjetoStoreTest extends TestCase
 {
 
-    use DatabaseTransactions;
+    // use DatabaseTransactions;
+    use RefreshDatabase;
 
     public function testCriacaoNovoProjeto()
     {
@@ -20,7 +21,6 @@ class ProjetoStoreTest extends TestCase
             "descricao" => "Um projeto para testes",
             "id_projeto_pai" => "0",
             "nivel_projeto" => "0",
-            "estado_projeto" => 0,
             "custo_previsto" => "10000"
         ];
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
@@ -34,7 +34,6 @@ class ProjetoStoreTest extends TestCase
             "descricao" => "Um projeto para testes",
             "id_projeto_pai" => "0",
             "nivel_projeto" => "0",
-            "estado_projeto" => 0,
             "custo_previsto" => "10000"
         ];
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
@@ -54,7 +53,6 @@ class ProjetoStoreTest extends TestCase
             "descricao" => "Um projeto para testes",
             "id_projeto_pai" => "0",
             "nivel_projeto" => "0",
-            "estado_projeto" => 0,
             "custo_previsto" => "10000"
         ];
         foreach ($campos as $campo) {
@@ -83,7 +81,6 @@ class ProjetoStoreTest extends TestCase
             "descricao" => "Um projeto para testes",
             "id_projeto_pai" => "0",
             "nivel_projeto" => "0",
-            "estado_projeto" => 0,
             "custo_previsto" => "10000"
         ];
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
@@ -98,7 +95,6 @@ class ProjetoStoreTest extends TestCase
             "descricao" => "Um projeto para testes",
             "id_projeto_pai" => "0",
             "nivel_projeto" => "0",
-            "estado_projeto" => 0,
             "custo_previsto" => "10000"
         ];
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
@@ -113,7 +109,6 @@ class ProjetoStoreTest extends TestCase
             "descricao" => $descricao,
             "id_projeto_pai" => "0",
             "nivel_projeto" => "0",
-            "estado_projeto" => 0,
             "custo_previsto" => "10000"
         ];
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
@@ -128,16 +123,11 @@ class ProjetoStoreTest extends TestCase
             "descricao" => $descricao,
             "id_projeto_pai" => "0",
             "nivel_projeto" => "0",
-            "estado_projeto" => 0,
             "custo_previsto" => "10000"
         ];
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
         $response->assertJsonFragment(["descricao" => ["A descrição é maior que 255 caracteres."]]);
         $response->assertStatus(422);
-    }
-
-    public function testCriacaoProjetoComStatusInvalido() {
-
     }
 
     public function testCriacaoProjetoComIdProjetoPaiInexistente() {
@@ -151,7 +141,6 @@ class ProjetoStoreTest extends TestCase
             "descricao" => "",
             "id_projeto_pai" => $idProjetoNaoExiste,
             "nivel_projeto" => "0",
-            "estado_projeto" => 0,
             "custo_previsto" => "10000"
         ];
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
@@ -165,7 +154,6 @@ class ProjetoStoreTest extends TestCase
             "descricao" => "",
             "id_projeto_pai" => 0,
             "nivel_projeto" => "0",
-            "estado_projeto" => 0,
             "custo_previsto" => "E43"
         ];
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
