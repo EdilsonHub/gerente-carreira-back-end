@@ -21,8 +21,7 @@ class ProjetoController extends Controller
     {
         $listaDeProjetos = Projeto::where('id_projeto_pai', null)->get();
         if($listaDeProjetos->count() == 0) {
-            // return Response("[]", 204);
-            return Response()->json($listaDeProjetos, 204);
+            return Response()->json([], 204);
         }
         return Response()->json($listaDeProjetos, 200);
     }
@@ -46,7 +45,7 @@ class ProjetoController extends Controller
      */
     public function store(ProjetoStoreRequest $request)
     {
-        return Response(Projeto::create($request->all()),201);
+        return Response()->json(Projeto::create($request->all()),201);
     }
 
     /**
@@ -58,7 +57,10 @@ class ProjetoController extends Controller
     public function show($id)
     {
         $return = Projeto::find($id);
-        return Response($return, empty($return)? 404 :200);
+        if(empty($return)) {
+            return Response()->json([], 404);
+        }
+        return Response()->json($return, 200);
     }
 
     /**

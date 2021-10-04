@@ -39,7 +39,7 @@ class ProjetoIndexTest extends TestCase
     public function testListaUmProjetoComUmProjetoFilho() {
         $projetoPai = Projeto::factory()->create();
         $projetoFilho = Projeto::factory(['id_projeto_pai' => $projetoPai->id])->create();
-        var_dump($projetoPai->id, $projetoFilho->toArray());
+        // var_dump($projetoPai->id, $projetoFilho->toArray());
     }
 
 
