@@ -9,14 +9,11 @@ use Tests\TestCase;
 class ProjetoShowTest extends TestCase
 {
     /**
-     * A basic feature test example.
-     *
-     * @return void
+     * @test
      */
-    public function test_example()
+    public function visualizar_um_projeto_sem_filho()
     {
-        // $response = $this->get('/');
-
-        // $response->assertStatus(200);
+        # code...
     }
+
 }

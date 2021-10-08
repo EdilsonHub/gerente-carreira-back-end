@@ -9,6 +9,8 @@ use http\Env\Response;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\ProjetoCollection;
+use App\Http\Resources\ProjetoResource;
 
 class ProjetoController extends Controller
 {
@@ -19,11 +21,12 @@ class ProjetoController extends Controller
      */
     public function index()
     {
-        $listaDeProjetos = Projeto::where('id_projeto_pai', null)->get();
-        if($listaDeProjetos->count() == 0) {
+        $queryBuscaProjetos = Projeto::where('id_projeto_pai', null)->with('filhos');
+
+        if($queryBuscaProjetos->count() == 0) {
             return Response()->json([], 204);
         }
-        return Response()->json($listaDeProjetos, 200);
+        return new ProjetoCollection($queryBuscaProjetos->paginate(10));
     }
 
     /**

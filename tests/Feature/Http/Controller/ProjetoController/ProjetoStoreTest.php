@@ -51,6 +51,7 @@ class ProjetoStoreTest extends TestCase
         $nome = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters. 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 1";
         $arrayInsert = $this->dataProjetoFaker(["nome" => $nome]);
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
+        $this->assertDatabaseHas('projetos',$arrayInsert);
         $response->assertJson($arrayInsert);
         $response->assertStatus(201);
         $this->assertDatabaseCount('projetos', 1);
@@ -71,6 +72,7 @@ class ProjetoStoreTest extends TestCase
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
         $response->assertJson($arrayInsert);
         $response->assertStatus(201);
+        $this->assertDatabaseHas('projetos',$arrayInsert);
         $this->assertDatabaseCount('projetos', 1);
     }
 
@@ -128,12 +130,15 @@ class ProjetoStoreTest extends TestCase
             "custo_previsto" => $faker->numberBetween()
         ];
         $return = [];
+
         $tryParams = function ($key, $data) use ($params) {
             return isset($params[$key])? $params[$key] : $data;
         };
+
         foreach($daraCreated as $key => $data) {
             $return[$key] = $tryParams($key, $data);
         }
+
         return $return;
     }
 }

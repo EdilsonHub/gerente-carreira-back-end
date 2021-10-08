@@ -20,6 +20,18 @@ class Projeto extends Model
         "local_de_realizacao_previsto"
     ];
 
+    public function filhos()
+    {
+        return $this->hasMany(Projeto::class, 'id_projeto_pai', 'id');
+    }
+
+    public function alou() {}
+
+    public function pai()
+    {
+        return $this->belongsTo(Projeto::class, 'id');
+    }
+
     // public function projetosFilhos()
     // {
     //     $this->belongsTo(Pro);
