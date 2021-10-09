@@ -15,6 +15,22 @@ class ProjetoResource extends JsonResource
     public function toArray($request)
     {
 
+
+        $filhos = [];
+        foreach ($this->filhos as $f) {
+            $filhos[] = [
+                'id' => $f->id,
+                'nome' => $f->nome,
+                'descricao' => $f->descricao,
+                'id_projeto_pai' => $f->id_projeto_pai,
+                'nivel_projeto' => $f->nivel_projeto,
+                'data_criacao' => $f->data_criacao,
+                'custo_previsto' => $f->custo_previsto,
+                'local_de_realizacao_previsto' => $f->local_de_realizacao_previsto,
+                'filhos' => []
+            ];
+        }
+
         return [
             'id' => $this->id,
             'nome' => $this->nome,
@@ -24,7 +40,8 @@ class ProjetoResource extends JsonResource
             'data_criacao' => $this->data_criacao,
             'custo_previsto' => $this->custo_previsto,
             'local_de_realizacao_previsto' => $this->local_de_realizacao_previsto,
-            'filhos' => new ProjetoCollection($this->filhos)
+            'filhos' => $filhos
+            // 'filhos' => new ProjetoCollection($this->filhos)
         ];
     }
 }

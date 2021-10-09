@@ -21,7 +21,7 @@ class ProjetoController extends Controller
      */
     public function index()
     {
-        $queryBuscaProjetos = Projeto::where('id_projeto_pai', null)->with('filhos');
+        $queryBuscaProjetos = Projeto::where('id_projeto_pai', null);
 
         if($queryBuscaProjetos->count() == 0) {
             return Response()->json([], 204);
@@ -78,7 +78,7 @@ class ProjetoController extends Controller
      */
     public function edit($id)
     {
-        return Response("testes",201);
+        return Response("testes edit",201);
     }
 
     /**
@@ -90,7 +90,7 @@ class ProjetoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return Response("testes",201);
+        return Response("testes update",201);
     }
 
     /**
