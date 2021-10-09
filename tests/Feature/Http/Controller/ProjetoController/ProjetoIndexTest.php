@@ -35,7 +35,8 @@ class ProjetoIndexTest extends TestCase
                         "nivel_projeto" => $projetoBuscado->nivel_projeto,
                         "data_criacao" =>  $projetoBuscado->data_criacao,
                         "custo_previsto" => $projetoBuscado->custo_previsto,
-                        "local_de_realizacao_previsto" => $projetoBuscado->local_de_realizacao_previsto
+                        "local_de_realizacao_previsto" => $projetoBuscado->local_de_realizacao_previsto,
+                        "filhos" => []
                     ]
                 ],
                 "links" => [
@@ -94,7 +95,8 @@ class ProjetoIndexTest extends TestCase
                         "nivel_projeto" => $projetoBuscadoArray[0]->nivel_projeto,
                         "data_criacao" =>  $projetoBuscadoArray[0]->data_criacao,
                         "custo_previsto" => $projetoBuscadoArray[0]->custo_previsto,
-                        "local_de_realizacao_previsto" => $projetoBuscadoArray[0]->local_de_realizacao_previsto
+                        "local_de_realizacao_previsto" => $projetoBuscadoArray[0]->local_de_realizacao_previsto,
+                        "filhos" => []
                     ],
                     [
                         "id" => $projetoBuscadoArray[1]->id,
@@ -103,7 +105,8 @@ class ProjetoIndexTest extends TestCase
                         "nivel_projeto" => $projetoBuscadoArray[1]->nivel_projeto,
                         "data_criacao" =>  $projetoBuscadoArray[1]->data_criacao,
                         "custo_previsto" => $projetoBuscadoArray[1]->custo_previsto,
-                        "local_de_realizacao_previsto" => $projetoBuscadoArray[1]->local_de_realizacao_previsto
+                        "local_de_realizacao_previsto" => $projetoBuscadoArray[1]->local_de_realizacao_previsto,
+                        "filhos" => []
                     ],
                     [
                         "id" => $projetoBuscadoArray[2]->id,
@@ -112,7 +115,8 @@ class ProjetoIndexTest extends TestCase
                         "nivel_projeto" => $projetoBuscadoArray[2]->nivel_projeto,
                         "data_criacao" =>  $projetoBuscadoArray[2]->data_criacao,
                         "custo_previsto" => $projetoBuscadoArray[2]->custo_previsto,
-                        "local_de_realizacao_previsto" => $projetoBuscadoArray[2]->local_de_realizacao_previsto
+                        "local_de_realizacao_previsto" => $projetoBuscadoArray[2]->local_de_realizacao_previsto,
+                        "filhos" => []
                     ]
                 ],
                 "links" => [
@@ -182,6 +186,7 @@ class ProjetoIndexTest extends TestCase
                                 "data_criacao" =>  $projetoFilhoBuscado->data_criacao,
                                 "custo_previsto" => $projetoFilhoBuscado->custo_previsto,
                                 "local_de_realizacao_previsto" => $projetoFilhoBuscado->local_de_realizacao_previsto,
+                                "filhos" => []
                             ]
                         ]
                     ]

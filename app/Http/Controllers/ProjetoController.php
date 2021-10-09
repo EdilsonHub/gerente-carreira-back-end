@@ -48,7 +48,11 @@ class ProjetoController extends Controller
      */
     public function store(ProjetoStoreRequest $request)
     {
-        return Response()->json(Projeto::create($request->all()),201);
+        $projeto = Projeto::create($request->all());
+        $projetoBuscado = Projeto::find($projeto->id);
+        $projetoResource = new ProjetoResource($projetoBuscado);
+
+        return Response()->json($projetoResource, 201);
     }
 
     /**
@@ -59,11 +63,11 @@ class ProjetoController extends Controller
      */
     public function show($id)
     {
-        $return = Projeto::find($id);
-        if(empty($return)) {
+        $projeto = Projeto::find($id);
+        if(empty($projeto)) {
             return Response()->json([], 404);
         }
-        return Response()->json($return, 200);
+        return (new ProjetoResource($projeto));
     }
 
     /**
