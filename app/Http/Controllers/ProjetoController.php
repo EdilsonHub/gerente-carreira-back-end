@@ -37,7 +37,7 @@ class ProjetoController extends Controller
      */
     public function create()
     {
-
+        return $this->index();
     }
 
     /**
@@ -71,16 +71,16 @@ class ProjetoController extends Controller
         return (new ProjetoResource($projeto));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return Response("testes edit",201);
-    }
+    // /**
+    //  * Show the form for editing the specified resource.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function edit($id)
+    // {
+    //     return Response("testes edit",201);
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -145,6 +145,15 @@ class ProjetoController extends Controller
      */
     public function destroy($id)
     {
-        return Response("testes",201);
+        $projeto = Projeto::find($id);
+        if(!$projeto) {
+            return Response()->json([], 404);
+        }
+        if($projeto->filhos->count() > 0) {
+            return Response()->json(['error' => ['Este projeto não pode ser apagado, este possui subprojetos']], 400);
+        }
+
+        Projeto::destroy($id);
+        return Response()->json([], 200);
     }
 }
