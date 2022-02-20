@@ -21,24 +21,27 @@ class ProjetoStoreTest extends TestCase
         $arrayInsert = $this->dataProjetoFaker();
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
         $response->assertJson($arrayInsert);
-        $this->assertDatabaseHas('projetos',$arrayInsert);
+        $this->assertDatabaseHas('projetos', $arrayInsert);
         $response->assertStatus(201);
     }
 
-    public function testCriacaoProjetoNomeUnicoEntreProjetosFilhosDoMesmoPai() {
+    public function testCriacaoProjetoNomeUnicoEntreProjetosFilhosDoMesmoPai()
+    {
         $arrayInsert = $this->dataProjetoFaker();
         $response1 = $this->json('POST', '/api/projeto', $arrayInsert);
         $response2 = $this->json('POST', '/api/projeto', $arrayInsert);
         $response2->assertJsonFragment(["nome" => ["já existe um projeto com este nome neste nível"]]);
         $response2->assertStatus(422);
-        $this->assertTrue(Projeto::where('id_projeto_pai', $arrayInsert['id_projeto_pai'])
+        $this->assertTrue(
+            Projeto::where('id_projeto_pai', $arrayInsert['id_projeto_pai'])
                 ->where('nome', $arrayInsert['nome'])
                 ->count() == 1
         );
         $this->assertDatabaseCount('projetos', 1);
     }
 
-    public function testCriacaoNovoProjetoSemNome() {
+    public function testCriacaoNovoProjetoSemNome()
+    {
         $this->createResponseSemCamposEssenciais("nome", [
             "nome" => [
                 "Não foi passado o nome para a criação do novo projeto."
@@ -47,17 +50,19 @@ class ProjetoStoreTest extends TestCase
         $this->assertDatabaseCount('projetos', 0);
     }
 
-    public function testCriacaoProjetoNome_255Caracteres() {
+    public function testCriacaoProjetoNome_255Caracteres()
+    {
         $nome = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters. 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 1";
         $arrayInsert = $this->dataProjetoFaker(["nome" => $nome]);
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
-        $this->assertDatabaseHas('projetos',$arrayInsert);
+        $this->assertDatabaseHas('projetos', $arrayInsert);
         $response->assertJson($arrayInsert);
         $response->assertStatus(201);
         $this->assertDatabaseCount('projetos', 1);
     }
 
-    public function testCriacaoProjetoNome_256Caracteres() {
+    public function testCriacaoProjetoNome_256Caracteres()
+    {
         $nome = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters. 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
         $arrayInsert = $this->dataProjetoFaker(["nome" => $nome]);
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
@@ -66,17 +71,19 @@ class ProjetoStoreTest extends TestCase
         $this->assertDatabaseCount('projetos', 0);
     }
 
-    public function testCriacaoProjetoDescricao_255Caracteres() {
+    public function testCriacaoProjetoDescricao_255Caracteres()
+    {
         $descricao = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters. 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 1";
         $arrayInsert = $this->dataProjetoFaker(["descricao" => $descricao]);
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
         $response->assertJson($arrayInsert);
         $response->assertStatus(201);
-        $this->assertDatabaseHas('projetos',$arrayInsert);
+        $this->assertDatabaseHas('projetos', $arrayInsert);
         $this->assertDatabaseCount('projetos', 1);
     }
 
-    public function testCriacaoProjetoDescricao_256Caracteres() {
+    public function testCriacaoProjetoDescricao_256Caracteres()
+    {
         $descricao = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters. 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
         $arrayInsert = $this->dataProjetoFaker(["descricao" => $descricao]);
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
@@ -85,7 +92,8 @@ class ProjetoStoreTest extends TestCase
         $this->assertDatabaseCount('projetos', 0);
     }
 
-    public function testCriacaoProjetoComIdProjetoPaiInexistente() {
+    public function testCriacaoProjetoComIdProjetoPaiInexistente()
+    {
         // $ultimoProjeto = Projeto::query()->latest('id')->first();
         $idProjetoNaoExiste = 1;
         // if(!empty($ultimoProjeto)) {
@@ -98,7 +106,8 @@ class ProjetoStoreTest extends TestCase
         $this->assertDatabaseCount('projetos', 0);
     }
 
-    public function testCriacaoProjetoComCustoNaoNunerico() {
+    public function testCriacaoProjetoComCustoNaoNunerico()
+    {
         $arrayInsert = $this->dataProjetoFaker(["custo_previsto" => "E43"]);
         $response = $this->json('POST', '/api/projeto', $arrayInsert);
         $response->assertJsonFragment(["custo_previsto" => ["Custo previsto do projeto é invalido."]]);
@@ -106,8 +115,9 @@ class ProjetoStoreTest extends TestCase
         $this->assertDatabaseCount('projetos', 0);
     }
 
-    private function createResponseSemCamposEssenciais($campos, $mensagemEsperada) {
-        if(!is_array($campos)) $campos = [$campos];
+    private function createResponseSemCamposEssenciais($campos, $mensagemEsperada)
+    {
+        if (!is_array($campos)) $campos = [$campos];
         $arrayInsert = $this->dataProjetoFaker();
         foreach ($campos as $campo) {
             unset($arrayInsert[$campo]);
@@ -120,22 +130,24 @@ class ProjetoStoreTest extends TestCase
         $response->assertStatus(422);
     }
 
-    private function dataProjetoFaker($params = []) {
+    private function dataProjetoFaker($params = [])
+    {
         $faker = Factory::create();
         $daraCreated = [
             "nome" => str_replace("-", " ", $faker->slug()),
             "descricao" => $faker->text(),
             "id_projeto_pai" => "0",
             "nivel_projeto" => "0",
+            "data_limite" =>  $faker->dateTime()->format('Y-m-d H:i:s'),
             "custo_previsto" => $faker->numberBetween()
         ];
         $return = [];
 
         $tryParams = function ($key, $data) use ($params) {
-            return isset($params[$key])? $params[$key] : $data;
+            return isset($params[$key]) ? $params[$key] : $data;
         };
 
-        foreach($daraCreated as $key => $data) {
+        foreach ($daraCreated as $key => $data) {
             $return[$key] = $tryParams($key, $data);
         }
 

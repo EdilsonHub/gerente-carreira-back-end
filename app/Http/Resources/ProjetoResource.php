@@ -25,6 +25,7 @@ class ProjetoResource extends JsonResource
                 'id_projeto_pai' => $f->id_projeto_pai,
                 'nivel_projeto' => $f->nivel_projeto,
                 'data_criacao' => $f->data_criacao,
+                'data_limite' => $f->data_limite,
                 'custo_previsto' => $f->custo_previsto,
                 'local_de_realizacao_previsto' => $f->local_de_realizacao_previsto,
                 'filhos' => []
@@ -38,6 +39,7 @@ class ProjetoResource extends JsonResource
             'id_projeto_pai' => $this->id_projeto_pai,
             'nivel_projeto' => $this->nivel_projeto,
             'data_criacao' => $this->data_criacao,
+            'data_limite' => $this->data_limite,
             'custo_previsto' => $this->custo_previsto,
             'local_de_realizacao_previsto' => $this->local_de_realizacao_previsto,
             'filhos' => $filhos

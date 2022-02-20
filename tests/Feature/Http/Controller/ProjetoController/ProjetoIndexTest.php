@@ -34,6 +34,7 @@ class ProjetoIndexTest extends TestCase
                         "descricao" => $projetoBuscado->descricao,
                         "nivel_projeto" => $projetoBuscado->nivel_projeto,
                         "data_criacao" =>  $projetoBuscado->data_criacao,
+                        "data_limite" => $projetoBuscado->data_limite,
                         "custo_previsto" => $projetoBuscado->custo_previsto,
                         "local_de_realizacao_previsto" => $projetoBuscado->local_de_realizacao_previsto,
                         "filhos" => []
@@ -94,6 +95,7 @@ class ProjetoIndexTest extends TestCase
                         "descricao" => $projetoBuscadoArray[0]->descricao,
                         "nivel_projeto" => $projetoBuscadoArray[0]->nivel_projeto,
                         "data_criacao" =>  $projetoBuscadoArray[0]->data_criacao,
+                        "data_limite" => $projetoBuscadoArray[0]->data_limite,
                         "custo_previsto" => $projetoBuscadoArray[0]->custo_previsto,
                         "local_de_realizacao_previsto" => $projetoBuscadoArray[0]->local_de_realizacao_previsto,
                         "filhos" => []
@@ -104,6 +106,7 @@ class ProjetoIndexTest extends TestCase
                         "descricao" => $projetoBuscadoArray[1]->descricao,
                         "nivel_projeto" => $projetoBuscadoArray[1]->nivel_projeto,
                         "data_criacao" =>  $projetoBuscadoArray[1]->data_criacao,
+                        "data_limite" => $projetoBuscadoArray[1]->data_limite,
                         "custo_previsto" => $projetoBuscadoArray[1]->custo_previsto,
                         "local_de_realizacao_previsto" => $projetoBuscadoArray[1]->local_de_realizacao_previsto,
                         "filhos" => []
@@ -114,6 +117,7 @@ class ProjetoIndexTest extends TestCase
                         "descricao" => $projetoBuscadoArray[2]->descricao,
                         "nivel_projeto" => $projetoBuscadoArray[2]->nivel_projeto,
                         "data_criacao" =>  $projetoBuscadoArray[2]->data_criacao,
+                        "data_limite" => $projetoBuscadoArray[2]->data_limite,
                         "custo_previsto" => $projetoBuscadoArray[2]->custo_previsto,
                         "local_de_realizacao_previsto" => $projetoBuscadoArray[2]->local_de_realizacao_previsto,
                         "filhos" => []
@@ -175,6 +179,7 @@ class ProjetoIndexTest extends TestCase
                         "descricao" => $projetoBuscado->descricao,
                         "nivel_projeto" => $projetoBuscado->nivel_projeto,
                         "data_criacao" =>  $projetoBuscado->data_criacao,
+                        "data_limite" => $projetoBuscado->data_limite,
                         "custo_previsto" => $projetoBuscado->custo_previsto,
                         "local_de_realizacao_previsto" => $projetoBuscado->local_de_realizacao_previsto,
                         "filhos" => [
@@ -184,6 +189,7 @@ class ProjetoIndexTest extends TestCase
                                 "descricao" => $projetoFilhoBuscado->descricao,
                                 "nivel_projeto" => $projetoFilhoBuscado->nivel_projeto,
                                 "data_criacao" =>  $projetoFilhoBuscado->data_criacao,
+                                "data_limite" => $projetoFilhoBuscado->data_limite,
                                 "custo_previsto" => $projetoFilhoBuscado->custo_previsto,
                                 "local_de_realizacao_previsto" => $projetoFilhoBuscado->local_de_realizacao_previsto,
                                 "filhos" => []
@@ -226,19 +232,4 @@ class ProjetoIndexTest extends TestCase
             ]
         );
     }
-
-
-    // public function testGetProjetoExistentePeloId() {
-    //     $projetoPai = Projeto::factory()->create();
-    //     $response = $this->json('GET', '/api/projeto/'.$projetoPai->id);
-    //     $response->assertStatus(200);
-    //     $response->assertJsonFragment(['id' => $projetoPai->id]);
-    // }
-
-    // public function testGetProjetoInexistentePeloId() {
-    //     $response = $this->json('GET', '/api/projeto/'.'1');
-    //     $response->assertStatus(404);
-    //     $response->assertJson([]);
-    //     $response->assertJsonCount(0);
-    // }
 }

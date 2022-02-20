@@ -24,7 +24,7 @@ class ProjetoController extends Controller
     {
         $queryBuscaProjetos = Projeto::where('id_projeto_pai', null);
 
-        if($queryBuscaProjetos->count() == 0) {
+        if ($queryBuscaProjetos->count() == 0) {
             return Response()->json([], 204);
         }
         return new ProjetoCollection($queryBuscaProjetos->paginate(10));
@@ -65,7 +65,7 @@ class ProjetoController extends Controller
     public function show($id)
     {
         $projeto = Projeto::find($id);
-        if(empty($projeto)) {
+        if (empty($projeto)) {
             return Response()->json([], 404);
         }
         return (new ProjetoResource($projeto));
@@ -95,42 +95,42 @@ class ProjetoController extends Controller
         $projeto = Projeto::find($id);
         $houveAtualizacao = false;
 
-        if(is_null($projeto)) {
+        if (is_null($projeto)) {
             return Response()->json([], 404);
         }
 
-        if(isset($request->custo_previsto)) {
-            if($request->custo_previsto < 0) {
-                return Response()->json(['custo_previsto' => ['Não pode ser atuazlizado com valor menor que zero.']], 422);
+        if (isset($request->custo_previsto)) {
+            if ($request->custo_previsto < 0) {
+                return Response()->json(['custo_previsto' => ['Não pode ser atualizado com valor menor que zero.']], 422);
             }
-            if(!is_numeric($request->custo_previsto)) {
+            if (!is_numeric($request->custo_previsto)) {
                 return Response()->json(['custo_previsto' => ['valor precisa ser um número.']], 422);
             }
         }
 
-        if(isset($request->id_projeto_pai)) {
-            if(!Projeto::find($request->id_projeto_pai)) {
-                return Response()->json(["id_projeto_pai" => ["Não foi encontrado o projeto de id ".$request->id_projeto_pai."."]], 400);;
+        if (isset($request->id_projeto_pai)) {
+            if (!Projeto::find($request->id_projeto_pai)) {
+                return Response()->json(["id_projeto_pai" => ["Não foi encontrado o projeto de id " . $request->id_projeto_pai . "."]], 400);;
             }
         }
 
-        if(isset($request->data_criacao) || isset($request->id)) {
+        if (isset($request->data_criacao) || isset($request->id)) {
             return Response()->json([], 400);
         }
 
         $update = function ($projetoAttr, $requestAttr = null) use ($projeto, $request, &$houveAtualizacao) {
-            if(is_null($requestAttr)) $requestAttr = $projetoAttr;
-            if(isset($request->{$requestAttr})) {
+            if (is_null($requestAttr)) $requestAttr = $projetoAttr;
+            if (isset($request->{$requestAttr})) {
                 $projeto->{$projetoAttr} = $request->{$requestAttr};
                 $houveAtualizacao = true;
             }
         };
 
-        foreach(['nome','descricao','id_projeto_pai','nivel_projeto','custo_previsto'] as $atributo) {
+        foreach (['nome', 'descricao', 'id_projeto_pai', 'nivel_projeto', 'custo_previsto', 'data_limite'] as $atributo) {
             $update($atributo);
         }
 
-        if($houveAtualizacao) {
+        if ($houveAtualizacao) {
             $projeto->save();
         }
 
@@ -146,10 +146,10 @@ class ProjetoController extends Controller
     public function destroy($id)
     {
         $projeto = Projeto::find($id);
-        if(!$projeto) {
+        if (!$projeto) {
             return Response()->json([], 404);
         }
-        if($projeto->filhos->count() > 0) {
+        if ($projeto->filhos->count() > 0) {
             return Response()->json(['error' => ['Este projeto não pode ser apagado, este possui subprojetos']], 400);
         }
 

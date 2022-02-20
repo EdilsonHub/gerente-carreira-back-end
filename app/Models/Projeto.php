@@ -14,6 +14,7 @@ class Projeto extends Model
         "id_projeto_pai",
         "nivel_projeto",
         "data_criacao",
+        "data_limite",
         "data_inicio_execucao",
         "data_conclusao",
         "custo_previsto",
@@ -25,7 +26,9 @@ class Projeto extends Model
         return $this->hasMany(Projeto::class, 'id_projeto_pai', 'id');
     }
 
-    public function alou() {}
+    public function alou()
+    {
+    }
 
     public function pai()
     {

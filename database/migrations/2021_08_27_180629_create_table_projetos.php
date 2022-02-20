@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateTableProjetos extends Migration
 {
@@ -20,7 +20,7 @@ class CreateTableProjetos extends Migration
             $table->string('descricao')->nullable();
             $table->integer('id_projeto_pai')->nullable();
             $table->integer('nivel_projeto')->default(0);
-            $table->dateTime('data_criacao' )->default(date('Y-m-d h:i:s'));
+            $table->dateTime('data_criacao')->default(date('Y-m-d h:i:s'));
             $table->bigInteger('custo_previsto')->default(0);
             $table->integer('local_de_realizacao_previsto')->nullable();
         });

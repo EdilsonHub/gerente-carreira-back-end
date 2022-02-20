@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Projeto;
+use DateInterval;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProjetoFactory extends Factory
@@ -23,7 +24,8 @@ class ProjetoFactory extends Factory
     {
         return [
             'nome' => $this->faker->name(),
-            'descricao' => "Uma descrição singular apenas para testes"
+            'descricao' => "Uma descrição singular, apenas para testes",
+            'data_limite' => (new \DateTime())->add((new \DateInterval("P7D")))
         ];
     }
 }

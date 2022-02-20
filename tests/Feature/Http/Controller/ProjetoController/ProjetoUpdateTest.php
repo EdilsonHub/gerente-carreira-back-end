@@ -29,7 +29,8 @@ class ProjetoUpdateTest extends TestCase
             "descricao" => "campo descricao atualizada",
             "id_projeto_pai" => $projetoPai2->id,
             "nivel_projeto" => 1,
-            "custo_previsto" => $projetoFilhoBuscado->custo_previsto + 1
+            "custo_previsto" => $projetoFilhoBuscado->custo_previsto + 1,
+            "data_limite" => (new \DateTime())->add(new \DateInterval("P30D"))->format('Y-m-d H:i:s')
             // "local_de_realizacao_previsto" => local_de_realizacao_previsto
         ]);
 
@@ -42,6 +43,7 @@ class ProjetoUpdateTest extends TestCase
             "id_projeto_pai" => $projetoPai2->id,
             "nivel_projeto" => 1,
             "custo_previsto" => $projetoFilhoBuscado->custo_previsto + 1,
+            "data_limite" => (new \DateTime())->add(new \DateInterval("P30D"))->format('Y-m-d H:i:s'),
             // "local_de_realizacao_previsto": null,
             "filhos" => []
         ]);
@@ -52,7 +54,8 @@ class ProjetoUpdateTest extends TestCase
             "descricao" => "campo descricao atualizada",
             "id_projeto_pai" => $projetoPai2->id,
             "nivel_projeto" => 1,
-            "custo_previsto" => $projetoFilhoBuscado->custo_previsto + 1
+            "custo_previsto" => $projetoFilhoBuscado->custo_previsto + 1,
+            "data_limite" => (new \DateTime())->add(new \DateInterval("P30D"))->format('Y-m-d H:i:s')
             // "local_de_realizacao_previsto": null,
         ]);
     }
@@ -236,7 +239,7 @@ class ProjetoUpdateTest extends TestCase
         $response = $this->json('PUT', '/api/projeto/' . $projeto->id, ['custo_previsto' => -200]);
 
         $assertJson = [
-            'custo_previsto' => ['Não pode ser atuazlizado com valor menor que zero.']
+            'custo_previsto' => ['Não pode ser atualizado com valor menor que zero.']
         ];
 
         $response->assertStatus(422);
@@ -247,7 +250,8 @@ class ProjetoUpdateTest extends TestCase
             "descricao" => $projeto->descricao,
             "id_projeto_pai" => $projeto->id_projeto_pai,
             "nivel_projeto" => $projeto->nivel_projeto,
-            "custo_previsto" => $projeto->custo_previsto
+            "custo_previsto" => $projeto->custo_previsto,
+            "data_limite" => $projeto->data_limite
             // "local_de_realizacao_previsto": null,
         ];
 
@@ -277,7 +281,8 @@ class ProjetoUpdateTest extends TestCase
             "descricao" => $projeto->descricao,
             "id_projeto_pai" => $projeto->id_projeto_pai,
             "nivel_projeto" => $projeto->nivel_projeto,
-            "custo_previsto" => $projeto->custo_previsto
+            "custo_previsto" => $projeto->custo_previsto,
+            "data_limite" => $projeto->data_limite
             // "local_de_realizacao_previsto": null,
         ];
 

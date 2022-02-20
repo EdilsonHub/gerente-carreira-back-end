@@ -12,7 +12,7 @@ class ProjetoShowTest extends TestCase
 
     use RefreshDatabase;
 
-        /**
+    /**
      * @test
      */
     public function visualizar_um_projeto_de_id_inexistente()
@@ -38,6 +38,7 @@ class ProjetoShowTest extends TestCase
             "descricao" => $projetoBuscado->descricao,
             "nivel_projeto" => $projetoBuscado->nivel_projeto,
             "data_criacao" =>  $projetoBuscado->data_criacao,
+            "data_limite" => $projetoBuscado->data_limite,
             "custo_previsto" => $projetoBuscado->custo_previsto,
             "local_de_realizacao_previsto" => $projetoBuscado->local_de_realizacao_previsto,
             "filhos" => []
@@ -63,6 +64,7 @@ class ProjetoShowTest extends TestCase
             "descricao" => $projetoBuscado->descricao,
             "nivel_projeto" => $projetoBuscado->nivel_projeto,
             "data_criacao" =>  $projetoBuscado->data_criacao,
+            "data_limite" => $projetoBuscado->data_limite,
             "custo_previsto" => $projetoBuscado->custo_previsto,
             "local_de_realizacao_previsto" => $projetoBuscado->local_de_realizacao_previsto,
             "filhos" => [
@@ -72,6 +74,7 @@ class ProjetoShowTest extends TestCase
                     "descricao" => $filhos[0]->descricao,
                     "nivel_projeto" => $filhos[0]->nivel_projeto,
                     "data_criacao" =>  $filhos[0]->data_criacao,
+                    "data_limite" =>  $filhos[0]->data_limite,
                     "custo_previsto" => $filhos[0]->custo_previsto,
                     "local_de_realizacao_previsto" => $filhos[0]->local_de_realizacao_previsto,
                 ],
@@ -81,6 +84,7 @@ class ProjetoShowTest extends TestCase
                     "descricao" => $filhos[1]->descricao,
                     "nivel_projeto" => $filhos[1]->nivel_projeto,
                     "data_criacao" =>  $filhos[1]->data_criacao,
+                    "data_limite" =>  $filhos[1]->data_limite,
                     "custo_previsto" => $filhos[1]->custo_previsto,
                     "local_de_realizacao_previsto" => $filhos[1]->local_de_realizacao_previsto,
                 ],
@@ -90,6 +94,7 @@ class ProjetoShowTest extends TestCase
                     "descricao" => $filhos[2]->descricao,
                     "nivel_projeto" => $filhos[2]->nivel_projeto,
                     "data_criacao" =>  $filhos[2]->data_criacao,
+                    "data_limite" =>  $filhos[2]->data_limite,
                     "custo_previsto" => $filhos[2]->custo_previsto,
                     "local_de_realizacao_previsto" => $filhos[2]->local_de_realizacao_previsto,
                 ]
