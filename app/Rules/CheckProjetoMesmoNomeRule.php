@@ -28,11 +28,11 @@ class CheckProjetoMesmoNomeRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        if($attribute != "nome") {
+        if ($attribute != "nome") {
             return true;
         }
         return (Projeto::where('id_projeto_pai', $this->idProjetoPai)
-                ->where('nome', $value)->count() == 0);
+            ->where('nome', $value)->count() == 0);
     }
 
     /**

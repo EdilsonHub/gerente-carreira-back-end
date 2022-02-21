@@ -24,13 +24,19 @@ class ProjetoUpdateTest extends TestCase
 
         $projetoFilhoBuscado = Projeto::find($projetoFilho->id);
 
+        $dataLimite = (new \DateTime())->add(new \DateInterval("P30D"))->format('Y-m-d H:i:s');
+
         $response = $this->json('PUT', '/api/projeto/' . $projetoFilho->id, [
             "nome" => "nome atualizado",
             "descricao" => "campo descricao atualizada",
             "id_projeto_pai" => $projetoPai2->id,
             "nivel_projeto" => 1,
             "custo_previsto" => $projetoFilhoBuscado->custo_previsto + 1,
-            "data_limite" => (new \DateTime())->add(new \DateInterval("P30D"))->format('Y-m-d H:i:s')
+            "data_limite" => $dataLimite,
+            'meses_previstos' => 1,
+            'dias_previstos' => 1,
+            'horas_previstas' => 1,
+            'minutos_previstos' => 1
             // "local_de_realizacao_previsto" => local_de_realizacao_previsto
         ]);
 
@@ -43,7 +49,11 @@ class ProjetoUpdateTest extends TestCase
             "id_projeto_pai" => $projetoPai2->id,
             "nivel_projeto" => 1,
             "custo_previsto" => $projetoFilhoBuscado->custo_previsto + 1,
-            "data_limite" => (new \DateTime())->add(new \DateInterval("P30D"))->format('Y-m-d H:i:s'),
+            "data_limite" => $dataLimite,
+            'meses_previstos' => 1,
+            'dias_previstos' => 1,
+            'horas_previstas' => 1,
+            'minutos_previstos' => 1,
             // "local_de_realizacao_previsto": null,
             "filhos" => []
         ]);
@@ -55,7 +65,11 @@ class ProjetoUpdateTest extends TestCase
             "id_projeto_pai" => $projetoPai2->id,
             "nivel_projeto" => 1,
             "custo_previsto" => $projetoFilhoBuscado->custo_previsto + 1,
-            "data_limite" => (new \DateTime())->add(new \DateInterval("P30D"))->format('Y-m-d H:i:s')
+            "data_limite" => $dataLimite,
+            'meses_previstos' => 1,
+            'dias_previstos' => 1,
+            'horas_previstas' => 1,
+            'minutos_previstos' => 1
             // "local_de_realizacao_previsto": null,
         ]);
     }
@@ -97,7 +111,7 @@ class ProjetoUpdateTest extends TestCase
         ]);
 
         $projetoFilho = Projeto::factory($arrayValoresPadroesCriacaoProjeto)->create()->fresh();
-        $this->assertAtualizaCampoUnico(['nivel_projeto' => 0], $projetoFilho);
+        $this->assertAtualizaCampoUnico(['nivel_projeto' => 0], 200, null, $projetoFilho);
     }
 
     /**
@@ -120,13 +134,13 @@ class ProjetoUpdateTest extends TestCase
     /**
      * @test
      */
-    public function falha_tentar_atualizar_campo_data_criacao()
+    public function falhar_tentar_atualizar_campo_data_criacao()
     {
         $projeto = Projeto::factory($this->arrayValoresPadroesCriacaoProjeto())->create()->fresh();
 
         $response = $this->json('PUT', '/api/projeto/' . $projeto->id, ['data_criacao' => '2019-10-09 06:35:41']);
 
-        $response->assertStatus(400);
+        $response->assertStatus(422);
 
         $assertJson = [
             // "id" => $projeto->id,
@@ -157,13 +171,13 @@ class ProjetoUpdateTest extends TestCase
     /**
      * @test
      */
-    public function falha_tentar_atualizar_campo_id()
+    public function falhar_tentar_atualizar_campo_id()
     {
         $projeto = Projeto::factory($this->arrayValoresPadroesCriacaoProjeto())->create()->fresh();
 
         $response = $this->json('PUT', '/api/projeto/' . $projeto->id, ['id' => $projeto->id + 10]);
 
-        $response->assertStatus(400);
+        $response->assertStatus(422);
 
         $assertJson = [
             // "id" => $projeto->id,
@@ -200,7 +214,7 @@ class ProjetoUpdateTest extends TestCase
 
         $response = $this->json('PUT', '/api/projeto/' . $projeto->id, ['id_projeto_pai' => $projeto->id + 10]);
 
-        $response->assertStatus(400);
+        $response->assertStatus(422);
 
         $assertJson = [
             // "id" => $projeto->id,
@@ -223,7 +237,7 @@ class ProjetoUpdateTest extends TestCase
             // "local_de_realizacao_previsto": null,
         ];
 
-        $response->assertJsonFragment(["id_projeto_pai" => ["Não foi encontrado o projeto de id " . ($projeto->id + 10) . "."]]);
+        $response->assertJsonFragment(["id_projeto_pai" => ["Projeto pai especificado não existe."]]);
 
         $this->assertDatabaseHas('projetos', $assertDatabaseHas);
     }
@@ -239,7 +253,7 @@ class ProjetoUpdateTest extends TestCase
         $response = $this->json('PUT', '/api/projeto/' . $projeto->id, ['custo_previsto' => -200]);
 
         $assertJson = [
-            'custo_previsto' => ['Não pode ser atualizado com valor menor que zero.']
+            'custo_previsto' => ['Custo previsto do projeto é invalido.']
         ];
 
         $response->assertStatus(422);
@@ -270,7 +284,7 @@ class ProjetoUpdateTest extends TestCase
         $response = $this->json('PUT', '/api/projeto/' . $projeto->id, ['custo_previsto' => 'Dw23']);
 
         $assertJson = [
-            'custo_previsto' => ['valor precisa ser um número.']
+            'custo_previsto' => ['Custo previsto do projeto é invalido.']
         ];
 
         $response->assertStatus(422);
@@ -302,6 +316,83 @@ class ProjetoUpdateTest extends TestCase
         $this->assertDatabaseCount('projetos', 0);
     }
 
+
+    public function test_falhar_tentar_atualizar_projeto_meses_previsto_negativo()
+    {
+        $this->assertAtualizaCampoUnico(
+            ["meses_previstos" => -1],
+            422,
+            ["meses_previstos" => ["Valor do campo meses deve ser maior ou igual a zero."]]
+        );
+    }
+    public function test_falhar_tentar_atualizar_projeto_dias_previsto_negativo()
+    {
+        $this->assertAtualizaCampoUnico(
+            ["dias_previstos" => -1],
+            422,
+            ["dias_previstos" => ["Valor do campo dias deve ser maior ou ou igual a zero."]]
+        );
+    }
+    public function test_falhar_tentar_atualizar_projeto_horas_previstas_negativa()
+    {
+        $this->assertAtualizaCampoUnico(
+            ["horas_previstas" => -1],
+            422,
+            ["horas_previstas" => ["Valor do campo horas deve ser maior ou igual zero."]]
+        );
+    }
+    public function test_falhar_tentar_atualizar_projeto_minutos_previsto_negativo()
+    {
+        $this->assertAtualizaCampoUnico(
+            ["minutos_previstos" => -1],
+            422,
+            ["minutos_previstos" => ["Valor do campo minutos deve ser maior ou igual a zero."]]
+        );
+    }
+    public function test_falhar_tentar_atualizar_projeto_meses_previsto_maior_1200()
+    {
+        $this->assertAtualizaCampoUnico(
+            ["meses_previstos" => 1201],
+            422,
+            ["meses_previstos" => ["Valor do campo meses deve ser menor ou igual a 1200."]]
+        );
+    }
+    public function test_falhar_tentar_atualizar_projeto_dias_previsto_maior_31()
+    {
+        $this->assertAtualizaCampoUnico(
+            ["dias_previstos" => 32],
+            422,
+            ["dias_previstos" => ["Valor do campo dias deve ser menor ou igual a 31."]]
+        );
+    }
+    public function test_falhar_tentar_atualizar_projeto_horas_previstas_maior_23()
+    {
+        $this->assertAtualizaCampoUnico(
+            ["horas_previstas" => 24],
+            422,
+            ["horas_previstas" => ["Valor do campo horas deve ser menor ou igual a 23."]]
+        );
+    }
+    public function test_falhar_tentar_atualizar_projeto_minutos_previsto_maior_59()
+    {
+        $this->assertAtualizaCampoUnico(
+            ["minutos_previstos" => 60],
+            422,
+            ["minutos_previstos" => ["Valor do campo minutos deve ser menor ou igual a 59."]]
+        );
+    }
+
+
+    // public function test_falhar_tentar_atualizar_um_projeto_mesmo_nome_projeto_irmao()
+    // {
+    //     $nomeUnico = "ProjetoX";
+    //     $projeto = Projeto::factory($this->arrayValoresPadroesCriacaoProjeto(["nome" => $nomeUnico]))->create()->fresh();
+    //     $this->assertAtualizaCampoUnico(
+    //         ["nome" => $nomeUnico],
+    //         422,
+    //         ["nome" => ["já existe um projeto com este nome neste nível"]]
+    //     );
+    // }
     public function arrayValoresPadroesCriacaoProjeto(array $alteracoes = [])
     {
         $padrao = [
@@ -310,6 +401,11 @@ class ProjetoUpdateTest extends TestCase
             "id_projeto_pai" => 0,
             "nivel_projeto" => 0,
             "custo_previsto" => 100,
+            "data_limite" => (new \DateTime())->add(new \DateInterval("P30D"))->format('Y-m-d H:i:s'),
+            'meses_previstos' => 1,
+            'dias_previstos' => 1,
+            'horas_previstas' => 1,
+            'minutos_previstos' => 1
         ];
 
         if (COUNT($alteracoes) === 0) {
@@ -322,7 +418,7 @@ class ProjetoUpdateTest extends TestCase
         return $padrao;
     }
 
-    public function assertAtualizaCampoUnico(array $campo, $projeto = null)
+    public function assertAtualizaCampoUnico(array $campo, $statusCode = 200, $assertJsonParamentro = null, $projeto = null)
     {
 
         if (COUNT($campo) > 1) throw new Exception("assertAtualizaCampoUnico");
@@ -336,33 +432,36 @@ class ProjetoUpdateTest extends TestCase
 
         $response = $this->json('PUT', '/api/projeto/' . $projeto->id, $campo);
 
-        $response->assertStatus(200);
+        $response->assertStatus($statusCode);
 
-        $assertJson = [
+        $arrayControle = [
             "id" => $projeto->id,
             "nome" => $projeto->nome,
             "descricao" => $projeto->descricao,
             "id_projeto_pai" => $projeto->id_projeto_pai,
             "nivel_projeto" => $projeto->nivel_projeto,
             "custo_previsto" => $projeto->custo_previsto,
-            // "local_de_realizacao_previsto": null,
-            "filhos" => []
-        ];
-
-        $assertDatabaseHas = [
-            "id" => $projeto->id,
-            "nome" => $projeto->nome,
-            "descricao" => $projeto->descricao,
-            "id_projeto_pai" => $projeto->id_projeto_pai,
-            "nivel_projeto" => $projeto->nivel_projeto,
-            "custo_previsto" => $projeto->custo_previsto
+            "data_limite" => (new \DateTime())->add(new \DateInterval("P30D"))->format('Y-m-d H:i:s'),
+            'meses_previstos' => 1,
+            'dias_previstos' => 1,
+            'horas_previstas' => 1,
+            'minutos_previstos' => 1
             // "local_de_realizacao_previsto": null,
         ];
+        $assertJson = array_merge(
+            $arrayControle,
+            ["filhos" => []]
+        );
 
-        $assertJson[$chaveArray] = $valorArray;
-        $assertDatabaseHas[$chaveArray] = $valorArray;
+        $assertDatabaseHas = $arrayControle;
 
-        $response->assertJson($assertJson);
+        if (!empty($assertJsonParamentro)) {
+            $response->assertJsonFragment($assertJsonParamentro);
+        } else {
+            $assertJson[$chaveArray] = $valorArray;
+            $assertDatabaseHas[$chaveArray] = $valorArray;
+            $response->assertJson($assertJson);
+        }
 
         $this->assertDatabaseHas('projetos', $assertDatabaseHas);
     }

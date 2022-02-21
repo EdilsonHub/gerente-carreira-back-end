@@ -17,10 +17,10 @@ class checkProjetoExisteRule implements Rule // verificar pq provavelmente o lar
      */
     public function passes($attribute, $value)
     {
-        if($value == 0) {
+        if (empty($value)) {
             return true;
         }
-        if(!in_array($attribute, ["id_projeto_pai"])) {
+        if (!in_array($attribute, ["id_projeto_pai"])) {
             return true;
         }
         return !!Projeto::find($value);

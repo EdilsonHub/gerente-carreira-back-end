@@ -14,7 +14,7 @@ class UpdateProjetos extends Migration
     public function up()
     {
         Schema::table('projetos', function (Blueprint $table) {
-            $table->dateTime('data_limite');
+            $table->dateTime('data_limite')->nullable();
         });
     }
 

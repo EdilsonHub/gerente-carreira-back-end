@@ -18,6 +18,10 @@ class Projeto extends Model
         "data_inicio_execucao",
         "data_conclusao",
         "custo_previsto",
+        'meses_previstos',
+        'dias_previstos',
+        'horas_previstas',
+        'minutos_previstos',
         "local_de_realizacao_previsto"
     ];
 

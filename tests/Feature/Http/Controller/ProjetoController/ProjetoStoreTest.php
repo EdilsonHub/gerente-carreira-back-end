@@ -115,6 +115,102 @@ class ProjetoStoreTest extends TestCase
         $this->assertDatabaseCount('projetos', 0);
     }
 
+
+    /**
+     * @test
+     */
+    public function falhar_tentar_criar_projeto_meses_previsto_negativo()
+    {
+        $arrayInsert = $this->dataProjetoFaker(["meses_previstos" => -1]);
+        $response = $this->json('POST', '/api/projeto', $arrayInsert);
+        $response->assertJsonFragment(["meses_previstos" => ["Valor do campo meses deve ser maior ou igual a zero."]]);
+        $response->assertStatus(422);
+        $this->assertDatabaseCount('projetos', 0);
+    }
+
+    /**
+     * @test
+     */
+    public function falhar_tentar_criar_projeto_dias_previsto_negativo()
+    {
+        $arrayInsert = $this->dataProjetoFaker(["dias_previstos" => -1]);
+        $response = $this->json('POST', '/api/projeto', $arrayInsert);
+        $response->assertJsonFragment(["dias_previstos" => ["Valor do campo dias deve ser maior ou ou igual a zero."]]);
+        $response->assertStatus(422);
+        $this->assertDatabaseCount('projetos', 0);
+    }
+
+    /**
+     * @test
+     */
+    public function falhar_tentar_criar_projeto_horas_previstas_negativa()
+    {
+        $arrayInsert = $this->dataProjetoFaker(["horas_previstas" => -1]);
+        $response = $this->json('POST', '/api/projeto', $arrayInsert);
+        $response->assertJsonFragment(["horas_previstas" => ["Valor do campo horas deve ser maior ou igual zero."]]);
+        $response->assertStatus(422);
+        $this->assertDatabaseCount('projetos', 0);
+    }
+
+    /**
+     * @test
+     */
+    public function falhar_tentar_criar_projeto_minutos_previsto_negativo()
+    {
+        $arrayInsert = $this->dataProjetoFaker(["minutos_previstos" => -1]);
+        $response = $this->json('POST', '/api/projeto', $arrayInsert);
+        $response->assertJsonFragment(["minutos_previstos" => ["Valor do campo minutos deve ser maior ou igual a zero."]]);
+        $response->assertStatus(422);
+        $this->assertDatabaseCount('projetos', 0);
+    }
+
+    /**
+     * @test
+     */
+    public function falhar_tentar_criar_projeto_meses_previsto_maior_1200()
+    {
+        $arrayInsert = $this->dataProjetoFaker(["meses_previstos" => 1201]);
+        $response = $this->json('POST', '/api/projeto', $arrayInsert);
+        $response->assertJsonFragment(["meses_previstos" => ["Valor do campo meses deve ser menor ou igual a 1200."]]);
+        $response->assertStatus(422);
+        $this->assertDatabaseCount('projetos', 0);
+    }
+
+    /**
+     * @test
+     */
+    public function falhar_tentar_criar_projeto_dias_previsto_maior_31()
+    {
+        $arrayInsert = $this->dataProjetoFaker(["dias_previstos" => 32]);
+        $response = $this->json('POST', '/api/projeto', $arrayInsert);
+        $response->assertJsonFragment(["dias_previstos" => ["Valor do campo dias deve ser menor ou igual a 31."]]);
+        $response->assertStatus(422);
+        $this->assertDatabaseCount('projetos', 0);
+    }
+
+    /**
+     * @test
+     */
+    public function falhar_tentar_criar_projeto_horas_previstas_maior_23()
+    {
+        $arrayInsert = $this->dataProjetoFaker(["horas_previstas" => 24]);
+        $response = $this->json('POST', '/api/projeto', $arrayInsert);
+        $response->assertJsonFragment(["horas_previstas" => ["Valor do campo horas deve ser menor ou igual a 23."]]);
+        $response->assertStatus(422);
+        $this->assertDatabaseCount('projetos', 0);
+    }
+
+    /**
+     * @test
+     */
+    public function falhar_tentar_criar_projeto_minutos_previsto_maior_59()
+    {
+        $arrayInsert = $this->dataProjetoFaker(["minutos_previstos" => 60]);
+        $response = $this->json('POST', '/api/projeto', $arrayInsert);
+        $response->assertJsonFragment(["minutos_previstos" => ["Valor do campo minutos deve ser menor ou igual a 59."]]);
+        $response->assertStatus(422);
+        $this->assertDatabaseCount('projetos', 0);
+    }
     private function createResponseSemCamposEssenciais($campos, $mensagemEsperada)
     {
         if (!is_array($campos)) $campos = [$campos];
@@ -130,6 +226,7 @@ class ProjetoStoreTest extends TestCase
         $response->assertStatus(422);
     }
 
+
     private function dataProjetoFaker($params = [])
     {
         $faker = Factory::create();
@@ -139,7 +236,12 @@ class ProjetoStoreTest extends TestCase
             "id_projeto_pai" => "0",
             "nivel_projeto" => "0",
             "data_limite" =>  $faker->dateTime()->format('Y-m-d H:i:s'),
-            "custo_previsto" => $faker->numberBetween()
+            "custo_previsto" => $faker->numberBetween(),
+            "meses_previstos" => $faker->numberBetween(1, 48),
+            "dias_previstos" => $faker->numberBetween(1, 30),
+            "horas_previstas" => $faker->numberBetween(1, 23),
+            "minutos_previstos" => $faker->numberBetween(1, 59)
+
         ];
         $return = [];
 

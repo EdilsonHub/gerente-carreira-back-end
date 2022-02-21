@@ -15,8 +15,11 @@ class checkCustoPrevistoProjetoRule implements Rule //provavelmente o laravel j√
      */
     public function passes($attribute, $value)
     {
-        if($attribute != "custo_previsto") {
+        if ($attribute != "custo_previsto") {
             return true;
+        }
+        if ($value < 0) {
+            return false;
         }
         return is_numeric($value);
     }

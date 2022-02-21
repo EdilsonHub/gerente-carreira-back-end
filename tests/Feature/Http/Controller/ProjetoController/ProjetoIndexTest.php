@@ -36,6 +36,10 @@ class ProjetoIndexTest extends TestCase
                         "data_criacao" =>  $projetoBuscado->data_criacao,
                         "data_limite" => $projetoBuscado->data_limite,
                         "custo_previsto" => $projetoBuscado->custo_previsto,
+                        'meses_previstos' => $projetoBuscado->meses_previstos,
+                        'dias_previstos' => $projetoBuscado->dias_previstos,
+                        'horas_previstas' => $projetoBuscado->horas_previstas,
+                        'minutos_previstos' => $projetoBuscado->minutos_previstos,
                         "local_de_realizacao_previsto" => $projetoBuscado->local_de_realizacao_previsto,
                         "filhos" => []
                     ]
@@ -97,6 +101,10 @@ class ProjetoIndexTest extends TestCase
                         "data_criacao" =>  $projetoBuscadoArray[0]->data_criacao,
                         "data_limite" => $projetoBuscadoArray[0]->data_limite,
                         "custo_previsto" => $projetoBuscadoArray[0]->custo_previsto,
+                        'meses_previstos' => $projetoBuscadoArray[0]->meses_previstos,
+                        'dias_previstos' => $projetoBuscadoArray[0]->dias_previstos,
+                        'horas_previstas' => $projetoBuscadoArray[0]->horas_previstas,
+                        'minutos_previstos' => $projetoBuscadoArray[0]->minutos_previstos,
                         "local_de_realizacao_previsto" => $projetoBuscadoArray[0]->local_de_realizacao_previsto,
                         "filhos" => []
                     ],
@@ -108,6 +116,10 @@ class ProjetoIndexTest extends TestCase
                         "data_criacao" =>  $projetoBuscadoArray[1]->data_criacao,
                         "data_limite" => $projetoBuscadoArray[1]->data_limite,
                         "custo_previsto" => $projetoBuscadoArray[1]->custo_previsto,
+                        'meses_previstos' => $projetoBuscadoArray[1]->meses_previstos,
+                        'dias_previstos' => $projetoBuscadoArray[1]->dias_previstos,
+                        'horas_previstas' => $projetoBuscadoArray[1]->horas_previstas,
+                        'minutos_previstos' => $projetoBuscadoArray[1]->minutos_previstos,
                         "local_de_realizacao_previsto" => $projetoBuscadoArray[1]->local_de_realizacao_previsto,
                         "filhos" => []
                     ],
@@ -119,6 +131,10 @@ class ProjetoIndexTest extends TestCase
                         "data_criacao" =>  $projetoBuscadoArray[2]->data_criacao,
                         "data_limite" => $projetoBuscadoArray[2]->data_limite,
                         "custo_previsto" => $projetoBuscadoArray[2]->custo_previsto,
+                        'meses_previstos' => $projetoBuscadoArray[2]->meses_previstos,
+                        'dias_previstos' => $projetoBuscadoArray[2]->dias_previstos,
+                        'horas_previstas' => $projetoBuscadoArray[2]->horas_previstas,
+                        'minutos_previstos' => $projetoBuscadoArray[2]->minutos_previstos,
                         "local_de_realizacao_previsto" => $projetoBuscadoArray[2]->local_de_realizacao_previsto,
                         "filhos" => []
                     ]
@@ -181,6 +197,10 @@ class ProjetoIndexTest extends TestCase
                         "data_criacao" =>  $projetoBuscado->data_criacao,
                         "data_limite" => $projetoBuscado->data_limite,
                         "custo_previsto" => $projetoBuscado->custo_previsto,
+                        'meses_previstos' => $projetoBuscado->meses_previstos,
+                        'dias_previstos' => $projetoBuscado->dias_previstos,
+                        'horas_previstas' => $projetoBuscado->horas_previstas,
+                        'minutos_previstos' => $projetoBuscado->minutos_previstos,
                         "local_de_realizacao_previsto" => $projetoBuscado->local_de_realizacao_previsto,
                         "filhos" => [
                             [
@@ -191,6 +211,10 @@ class ProjetoIndexTest extends TestCase
                                 "data_criacao" =>  $projetoFilhoBuscado->data_criacao,
                                 "data_limite" => $projetoFilhoBuscado->data_limite,
                                 "custo_previsto" => $projetoFilhoBuscado->custo_previsto,
+                                'meses_previstos' => $projetoFilhoBuscado->meses_previstos,
+                                'dias_previstos' => $projetoFilhoBuscado->dias_previstos,
+                                'horas_previstas' => $projetoFilhoBuscado->horas_previstas,
+                                'minutos_previstos' => $projetoFilhoBuscado->minutos_previstos,
                                 "local_de_realizacao_previsto" => $projetoFilhoBuscado->local_de_realizacao_previsto,
                                 "filhos" => []
                             ]

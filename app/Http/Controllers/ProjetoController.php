@@ -3,15 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjetoStoreRequest;
+use App\Http\Requests\ProjetoUpdateRequest;
 use App\Models\Projeto;
-use App\Rules\CheckProjetoMesmoNomeRule;
-use http\Env\Response;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\ProjetoCollection;
 use App\Http\Resources\ProjetoResource;
-use Facade\FlareClient\Http\Response as HttpResponse;
 
 class ProjetoController extends Controller
 {
@@ -89,7 +84,7 @@ class ProjetoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProjetoUpdateRequest $request, $id)
     {
 
         $projeto = Projeto::find($id);
@@ -99,24 +94,9 @@ class ProjetoController extends Controller
             return Response()->json([], 404);
         }
 
-        if (isset($request->custo_previsto)) {
-            if ($request->custo_previsto < 0) {
-                return Response()->json(['custo_previsto' => ['Não pode ser atualizado com valor menor que zero.']], 422);
-            }
-            if (!is_numeric($request->custo_previsto)) {
-                return Response()->json(['custo_previsto' => ['valor precisa ser um número.']], 422);
-            }
-        }
-
-        if (isset($request->id_projeto_pai)) {
-            if (!Projeto::find($request->id_projeto_pai)) {
-                return Response()->json(["id_projeto_pai" => ["Não foi encontrado o projeto de id " . $request->id_projeto_pai . "."]], 400);;
-            }
-        }
-
-        if (isset($request->data_criacao) || isset($request->id)) {
-            return Response()->json([], 400);
-        }
+        // if (isset($request->data_criacao) || isset($request->id)) {
+        //     return Response()->json([], 400);
+        // }
 
         $update = function ($projetoAttr, $requestAttr = null) use ($projeto, $request, &$houveAtualizacao) {
             if (is_null($requestAttr)) $requestAttr = $projetoAttr;
@@ -126,7 +106,7 @@ class ProjetoController extends Controller
             }
         };
 
-        foreach (['nome', 'descricao', 'id_projeto_pai', 'nivel_projeto', 'custo_previsto', 'data_limite'] as $atributo) {
+        foreach ((new Projeto())->getFillable() as $atributo) {
             $update($atributo);
         }
 
