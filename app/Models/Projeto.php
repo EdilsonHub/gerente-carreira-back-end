@@ -30,17 +30,8 @@ class Projeto extends Model
         return $this->hasMany(Projeto::class, 'id_projeto_pai', 'id');
     }
 
-    public function alou()
-    {
-    }
-
     public function pai()
     {
         return $this->belongsTo(Projeto::class, 'id');
     }
-
-    // public function projetosFilhos()
-    // {
-    //     $this->belongsTo(Pro);
-    // }
 }
