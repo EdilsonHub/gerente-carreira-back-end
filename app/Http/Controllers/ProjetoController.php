@@ -22,7 +22,7 @@ class ProjetoController extends Controller
         if ($queryBuscaProjetos->count() == 0) {
             return Response()->json([], 204);
         }
-        return new ProjetoCollection($queryBuscaProjetos->paginate(10));
+        return new ProjetoCollection($queryBuscaProjetos->paginate(100));
     }
 
     /**
