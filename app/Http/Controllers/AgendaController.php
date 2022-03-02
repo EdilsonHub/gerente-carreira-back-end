@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AgendaStoreRequest;
 use App\Http\Resources\AgendaResource;
 use App\Models\Agenda;
 use Illuminate\Http\Request;
+
 
 class AgendaController extends Controller
 {
@@ -15,7 +17,7 @@ class AgendaController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(AgendaStoreRequest $request)
     {
         $agenda = Agenda::create($request->all());
         $agendaBuscada = Agenda::find($agenda->id);

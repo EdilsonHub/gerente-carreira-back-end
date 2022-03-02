@@ -3,11 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Projeto;
-use DeepCopy\Filter\ReplaceFilter;
 use Faker\Factory;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProjetoStoreTest extends TestCase
